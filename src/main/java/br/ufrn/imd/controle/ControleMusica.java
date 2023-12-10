@@ -9,9 +9,14 @@ import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.utils.Utils;
 
 public class ControleMusica {
+    private static ControleMusica instancia;
     public List<Musica> musicasCadastradas;
 
-    public ControleMusica() {
+    public static ControleMusica getInstancia() {
+        if (instancia == null) instancia = new ControleMusica();
+        return instancia;
+    }
+    private ControleMusica() {
         this.musicasCadastradas = obterMusicasCadastradas();
     }
 

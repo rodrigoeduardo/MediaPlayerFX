@@ -40,7 +40,7 @@ public class ControlePlaylist {
 
     public void adicionarMusicaNaPlaylist(Playlist playlist, Musica musica, Usuario usuarioLogado){
         if (usuarioLogado instanceof UsuarioPremium){
-            ControleMusica controlerMusica = new ControleMusica();
+            ControleMusica controlerMusica = ControleMusica.getInstancia();
             for (Musica musicaCadastrada : controlerMusica.obterMusicasCadastradas()){
                 if (musica.equals(musicaCadastrada)){
                     if (playlist.getMusicas().indexOf(musica) == -1){

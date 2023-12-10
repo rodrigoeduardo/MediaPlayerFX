@@ -12,10 +12,16 @@ import br.ufrn.imd.modelo.UsuarioPremium;
 import br.ufrn.imd.utils.Utils;
 
 public class ControleUsuario {
+    private static ControleUsuario instancia;
     private List<Usuario> usuariosCadastrados;
     private Usuario usuarioLogado;
 
-    public ControleUsuario() {
+    public static ControleUsuario getInstancia() {
+        if (instancia == null) instancia = new ControleUsuario();
+        return instancia;
+    }
+
+    private ControleUsuario() {
         this.usuariosCadastrados = obterUsuariosCadastrados();
         this.usuarioLogado = null;
     }
