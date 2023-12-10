@@ -30,7 +30,7 @@ public class Utils {
 
     public static void escreverLinhaArquivo(String fileName, String linha) throws IOException {
         File file = new File(fileName);
-        FileWriter fw = new FileWriter(file);
+        FileWriter fw = new FileWriter(file, true);
         BufferedWriter bw = new BufferedWriter(fw);
 
         bw.write(linha);
