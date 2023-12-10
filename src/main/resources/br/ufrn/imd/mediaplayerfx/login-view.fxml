@@ -4,27 +4,50 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.ufrn.imd.mediaplayerfx.controle.LoginController">
    <left>
-      <AnchorPane prefHeight="400.0" prefWidth="286.0" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <AnchorPane prefHeight="400.0" prefWidth="285.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="400.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="welcomeText" layoutX="70.0" layoutY="82.0" text="Logar no Spotify">
+            <Label fx:id="welcomeText1" layoutX="100.0" layoutY="61.0" text="Registrar-se">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="usuarioTextField" layoutX="56.0" layoutY="140.0" promptText="Insira o usuário" />
-            <Button fx:id="loginBtn" layoutX="113.0" layoutY="244.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" />
-            <PasswordField fx:id="senhaField" layoutX="55.0" layoutY="188.0" promptText="Insira a senha" />
-            <Label fx:id="statusLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="77.0" layoutY="337.0" scaleShape="false" text="Usuário não logado" textAlignment="CENTER" />
+            <TextField fx:id="usuarioTextFieldCadastro" layoutX="65.0" layoutY="111.0" promptText="Insira o usuário" />
+            <Button fx:id="cadastroBtn" layoutX="122.0" layoutY="204.0" mnemonicParsing="false" onAction="#onCadastroButtonClick" text="Enviar" />
+            <PasswordField fx:id="senhaFieldCadastro" layoutX="65.0" layoutY="159.0" promptText="Insira a senha" />
+         </children></AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="280.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="welcomeText" layoutX="100.0" layoutY="59.0" text="Fazer login">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="usuarioTextField" layoutX="65.0" layoutY="109.0" promptText="Insira o usuário" />
+            <Button fx:id="loginBtn" layoutX="122.0" layoutY="202.0" mnemonicParsing="false" onAction="#onLoginButtonClick" text="Login" />
+            <PasswordField fx:id="senhaField" layoutX="65.0" layoutY="157.0" promptText="Insira a senha" />
+            <Label fx:id="statusLogin" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0" layoutY="250.0" text="Usuário não logado" textAlignment="RIGHT" AnchorPane.rightAnchor="14.0" />
          </children>
       </AnchorPane>
    </right>
+   <top>
+      <AnchorPane prefHeight="120.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="74.0" fitWidth="273.0" layoutX="177.0" layoutY="46.0" preserveRatio="true">
+               <image>
+                  <Image url="@spotify.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </top>
 </BorderPane>
