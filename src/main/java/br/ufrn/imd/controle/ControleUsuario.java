@@ -11,21 +11,49 @@ import br.ufrn.imd.modelo.Usuario;
 import br.ufrn.imd.modelo.UsuarioPremium;
 import br.ufrn.imd.utils.Utils;
 
+/**
+ * A classe ControleUsuario é responsável por gerenciar o login e cadastro de usuários, e atualização
+ * de playlists associadas a usuários premium.
+ */
 public class ControleUsuario {
+
+    /**
+     * Instância única da classe ControleUsuario.
+     */
     private static ControleUsuario instancia;
+
+    /**
+     * Lista de usuários cadastrados.
+     */
     private List<Usuario> usuariosCadastrados;
+
+    /**
+     * Usuário atualmente logado no sistema.
+     */
     private Usuario usuarioLogado;
 
+    /**
+     * @return A instância da classe ControleUsuario.
+     */
     public static ControleUsuario getInstancia() {
         if (instancia == null) instancia = new ControleUsuario();
         return instancia;
     }
 
+    /**
+     * Construtor privado que inicializa a lista de usuários.
+     */
     private ControleUsuario() {
         this.usuariosCadastrados = obterUsuariosCadastrados();
         this.usuarioLogado = null;
     }
 
+    /**
+     * Tenta o login de um usuário com o username e senha fornecidos.
+     * @param username O username do usuário.
+     * @param senha A senha do usuário.
+     * @return true se o login for bem sucedido, false caso contrário.
+     */
     public boolean fazerLogin(String username, String senha) {
         for (Usuario usuario : usuariosCadastrados) {
             if (usuario.getUsername().equals(username) && usuario.getSenha().equals(senha)) {
@@ -36,6 +64,12 @@ public class ControleUsuario {
         return false;
     }
 
+    /**
+     * Realiza o cadastro de um novo usuário no arquivo usuarios.txt no db.
+     * @param username O username do novo usuário.
+     * @param senha A senha do novo usuário.
+     * @param ehPremium Indica se o novo usuário é premium ou não.
+     */
     public void fazerCadastro(String username, String senha, boolean ehPremium) {
         for (Usuario usuario : this.usuariosCadastrados){
             if (usuario.getUsername() == username){
@@ -57,6 +91,10 @@ public class ControleUsuario {
         }
     }
 
+    /**
+     * Obtém a lista de usuários cadastrados lendo os dados de usuarios.txt.
+     * @return Lista de usuários cadastrados.
+     */
     public List<Usuario> obterUsuariosCadastrados() {
         List<String> usuarios;
 
@@ -86,6 +124,9 @@ public class ControleUsuario {
         return usuariosCadastrados;
     }
 
+    /**
+     * Atualiza as playlists associadas ao usuário logado.
+     */
     public void atualizarPlaylistsDeUsuario(){
         List<File> playlistsArquivos = listarPlaylistsDeUsuario();
 
@@ -118,18 +159,34 @@ public class ControleUsuario {
         return;
     }
 
+    /**
+     * Obtém a lista atual de usuários cadastrados.
+     * @return Lista de usuários cadastrados.
+     */
     public List<Usuario> getUsuariosCadastrados() {
         return usuariosCadastrados;
     }
 
+    /**
+     * Obtém o usuário atualmente logado no sistema.
+     * @return Usuário logado.
+     */
     public Usuario getUsuarioLogado() {
         return usuarioLogado;
     }
 
+    /**
+     * Define o usuário logado no sistema.
+     * @param usuarioLogado O usuário a ser definido como logado.
+     */
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
     }
-    
+
+    /**
+     * Lista os arquivos de playlists no db com sufixo _usernameUsuarioLogado.txt.
+     * @return Lista de arquivos de playlists associados ao usuário logado.
+     */
     private List<File> listarPlaylistsDeUsuario() {
         List<File> playlistsDeUsuario = new ArrayList<>();
         File pasta = new File("db/");
