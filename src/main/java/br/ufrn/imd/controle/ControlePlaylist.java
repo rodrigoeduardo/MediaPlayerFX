@@ -9,7 +9,17 @@ import br.ufrn.imd.modelo.Usuario;
 import br.ufrn.imd.modelo.UsuarioPremium;
 import br.ufrn.imd.utils.Utils;
 
+/**
+ * A classe ControlePlaylist é responsável por gerenciar a criação, remoção e alteração de instâncias da classe
+ * Playlist e arquivos de playlist.
+ */
 public class ControlePlaylist {
+
+    /**
+     * Adiciona uma nova playlist para um usuário premium e cria um arquivo correspondente.
+     * @param nome O nome da nova playlist.
+     * @param usuarioLogado O usuário logado que está criando a playlist.
+     */
     public void adicionarPlaylist(String nome, Usuario usuarioLogado) {
         if (usuarioLogado instanceof UsuarioPremium) {
             ((UsuarioPremium) usuarioLogado).adicionarPlaylist(new Playlist(nome));
@@ -23,6 +33,11 @@ public class ControlePlaylist {
         }
     }
 
+    /**
+     * Remove uma playlist de um usuário premium e o arquivo correspondente.
+     * @param playlist A playlist a ser removida.
+     * @param usuarioLogado O usuário logado que está removendo a playlist.
+     */
     public void removerPlaylist(Playlist playlist, Usuario usuarioLogado) {
         if (usuarioLogado instanceof UsuarioPremium){
             ((UsuarioPremium) usuarioLogado).removerPlaylist(playlist);
@@ -31,13 +46,19 @@ public class ControlePlaylist {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
+
         } else {
             return;
         }
-        
+
     }
 
+    /**
+     * Adiciona uma música a uma playlist de um usuário premium e atualiza o arquivo correspondente.
+     * @param playlist A playlist à qual a música será adicionada.
+     * @param musica A música a ser adicionada à playlist.
+     * @param usuarioLogado O usuário logado que está adicionando a música à playlist.
+     */
     public void adicionarMusicaNaPlaylist(Playlist playlist, Musica musica, Usuario usuarioLogado){
         if (usuarioLogado instanceof UsuarioPremium){
             ControleMusica controlerMusica = ControleMusica.getInstancia();
@@ -61,6 +82,12 @@ public class ControlePlaylist {
         }
     }
 
+    /**
+     * Cria um arquivo no molde playlist_nomePlaylist_usuario.txt no db para armazenar os dados da playlist.
+     * @param nomePlaylist O nome da playlist.
+     * @param usuario O usuário associado à playlist.
+     * @throws IOException Se houver um problema ao criar o arquivo.
+     */
     private static void criarArquivoPlaylist(String nomePlaylist, Usuario usuario) throws IOException{
         File file = new File("db/playlist_" + nomePlaylist + "_" + usuario.getUsername() + ".txt");
 
@@ -71,6 +98,12 @@ public class ControlePlaylist {
         }
     }
 
+    /**
+     * Remove um arquivo no molde playlist_nomePlaylist_usuario.txt do db.
+     * @param playlist A playlist cujo arquivo deve ser removido.
+     * @param usuario O usuário associado à playlist.
+     * @throws IOException Se houver um problema ao remover o arquivo.
+     */
     private static void removerPlaylistArquivo(Playlist playlist, Usuario usuario) throws IOException{
         String nomePlaylist = playlist.getNome();
         File file = new File("db/playlist_" + nomePlaylist + "_" + usuario.getUsername() + ".txt");
