@@ -9,7 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A classe Utils fornece métodos utilitários para manipulação de arquivos .txt.
+ */
 public class Utils {
+
+    /**
+     * Lê o conteúdo de um arquivo e retorna cada linha como um elemento em uma lista de strings.
+     * @param fileName O caminho do arquivo a ser lido.
+     * @return Uma lista contendo as linhas do arquivo.
+     * @throws IOException Se ocorrer um erro durante a leitura do arquivo.
+     */
     public static List<String> lerArquivo(String fileName) throws IOException {
         File file = new File(fileName);
         FileReader fr = new FileReader(file);
@@ -28,6 +38,12 @@ public class Utils {
         return output;
     }
 
+    /**
+     * Escreve uma linha no final de um arquivo.
+     * @param fileName O caminho do arquivo a ser escrito.
+     * @param linha Linha a ser escrita no arquivo.
+     * @throws IOException Se ocorrer um erro durante a escrita no arquivo.
+     */
     public static void escreverLinhaArquivo(String fileName, String linha) throws IOException {
         File file = new File(fileName);
         FileWriter fw = new FileWriter(file, true);
@@ -35,11 +51,17 @@ public class Utils {
 
         bw.write(linha);
         bw.newLine();
-        
+
         bw.close();
         fw.close();
     }
 
+    /**
+     * Remove uma linha de um arquivo com base no valor da primeira coluna, em separação por vírgulas.
+     * @param fileName O nome do arquivo a ser modificado.
+     * @param linhaParaRemover O valor a ser procurado e removido na primeira coluna.
+     * @throws IOException Se ocorrer um erro durante a leitura ou escrita do arquivo.
+     */
     public static void removerPorNome(String fileName, String linhaParaRemover) throws IOException {
         File inputFile = new File(fileName);
         File tempFile = new File("tempFile.txt");
