@@ -18,6 +18,8 @@ import java.io.File;
 
 public class PlayerController {
     @FXML
+    private Label chooseMusic;
+    @FXML
     private Label username;
     @FXML
     private Label tipoContaUsuario;
@@ -42,6 +44,21 @@ public class PlayerController {
 
     @FXML
     private Button btnRemovePlaylist;
+
+    /**
+     * A classe Player representa um reprodutor de músicas que pode tocar, pausar, continuar, avançar para a próxima
+     * música e voltar para a música anterior.
+     */
+
+    /**
+     * A música atualmente em reprodução.
+     */
+    private Musica musicaAtual;
+
+    /**
+     * O tempo atual de reprodução da música, em segundos.
+     */
+    private int tempoAtual;
 
     @FXML
     private ListView<?> diretorioGeral;
@@ -84,8 +101,8 @@ public class PlayerController {
 
     }
 
-    private Media media = new Media("C:/Users/vgmen/Music/playlist/Big in Japan (Remaster).mp3");
-    private MediaPlayer mediaPlayer = new MediaPlayer(media);
+    //private Media media = new Media("C:/Users/vgmen/Music/playlist/Big in Japan (Remaster).mp3");
+    private MediaPlayer mediaPlayer;
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
 
@@ -96,8 +113,6 @@ public class PlayerController {
             virarPremiumBtn.setDisable(true);
         }
     }
-
-    private Label chooseMusic;
 
     @FXML
     void chooseMusic(MouseEvent event) {
@@ -113,86 +128,72 @@ public class PlayerController {
     }
 
 
+
     /**
-     * A classe Player representa um reprodutor de músicas que pode tocar, pausar, continuar, avançar para a próxima
-     * música e voltar para a música anterior.
+     * Inicia do início a reprodução da música atual.
      */
-
-        /**
-         * A música atualmente em reprodução.
-         */
-        private Musica musicaAtual;
-
-        /**
-         * O tempo atual de reprodução da música, em segundos.
-         */
-        private int tempoAtual;
-
-        /**
-         * Inicia do início a reprodução da música atual.
-         */
-        public void tocarMusica() {
-            mediaPlayer.play();
-        }
+    public void tocarMusica() {
+        mediaPlayer.play();
+    }
 
 
-        /**
-         * Pausa a reprodução da música atual.
-         */
-        public void pausarMusica() {
-            mediaPlayer.pause();
-        }
+    /**
+     * Pausa a reprodução da música atual.
+     */
+    public void pausarMusica() {
+        mediaPlayer.pause();
+    }
 
-        /**
-         * Retoma a reprodução da música atual a partir do ponto de pausa.
-         */
-        public void continuarMusica() {
+    /**
+     * Retoma a reprodução da música atual a partir do ponto de pausa.
+     */
+    public void continuarMusica() {
 
-        }
+    }
 
-        /**
-         * Avança para a próxima música do diretório ou playlist.
-         */
-        public void tocarProximaMusica() {
+    /**
+     * Avança para a próxima música do diretório ou playlist.
+     */
+    public void tocarProximaMusica() {
 
-        }
+    }
 
-        /**
-         * Volta para a música anterior do diretório ou playlist.
-         */
-        public void tocarMusicaAnterior() {
+    /**
+     * Volta para a música anterior do diretório ou playlist.
+     */
+    public void tocarMusicaAnterior() {
 
-        }
+    }
 
-        /**
-         * Obtém a música atualmente em reprodução.
-         * @return Instância da classe Musica representando a música atual.
-         */
-        public Musica getMusicaAtual() {
-            return musicaAtual;
-        }
+    /**
+     * Obtém a música atualmente em reprodução.
+     * @return Instância da classe Musica representando a música atual.
+     */
+    public Musica getMusicaAtual() {
+        return musicaAtual;
+    }
 
-        /**
-         * Define a música que será reproduzida.
-         * @param musicaAtual A instância da classe Musica que será definida como a música atual.
-         */
-        public void setMusicaAtual(Musica musicaAtual) {
-            this.musicaAtual = musicaAtual;
-        }
+    /**
+     * Define a música que será reproduzida.
+     * @param musicaAtual A instância da classe Musica que será definida como a música atual.
+     */
+    public void setMusicaAtual(Musica musicaAtual) {
+        this.musicaAtual = musicaAtual;
+    }
 
-        /**
-         * Obtém o tempo atual de reprodução da música, em segundos.
-         * @return Tempo atual de reprodução da música.
-         */
-        public int getTempoAtual() {
-            return tempoAtual;
-        }
+    /**
+     * Obtém o tempo atual de reprodução da música, em segundos.
+     * @return Tempo atual de reprodução da música.
+     */
+    public int getTempoAtual() {
+        return tempoAtual;
+    }
 
-        /**
-         * Define o tempo atual de reprodução da música, em segundos.
-         * @param tempoAtual O tempo atual de reprodução da música a ser definido.
-         */
-        public void setTempoAtual(int tempoAtual) {
-            this.tempoAtual = tempoAtual;
-        }
+    /**
+     * Define o tempo atual de reprodução da música, em segundos.
+     * @param tempoAtual O tempo atual de reprodução da música a ser definido.
+     */
+    public void setTempoAtual(int tempoAtual) {
+        this.tempoAtual = tempoAtual;
+    }
 }
