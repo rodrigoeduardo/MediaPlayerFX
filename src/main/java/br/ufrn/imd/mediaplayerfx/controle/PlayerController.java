@@ -6,7 +6,6 @@ import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.controle.ControleUsuario;
 import br.ufrn.imd.modelo.Playlist;
 import br.ufrn.imd.modelo.UsuarioPremium;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,10 +14,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.util.List;
@@ -47,8 +44,6 @@ public class PlayerController {
     private Label username;
     @FXML
     private Label tipoContaUsuario;
-    @FXML
-    private Button virarPremiumBtn;
 
     @FXML
     private ListView<Playlist> lvPlaylistsDoUsuario;
@@ -122,6 +117,7 @@ public class PlayerController {
 
                 controlePlaylist.adicionarMusicaNaPlaylist(playlistAtual, selectedItem, controleUsuario.getUsuarioLogado());
                 controleUsuario.atualizarPlaylistsDeUsuario();
+                System.out.println(playlistAtual.getMusicas());
 
                 obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
                 lvPlayListAtual.setItems(obsPlaylistAtual);
@@ -307,7 +303,6 @@ public class PlayerController {
 
         if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium) {
             tipoContaUsuario.setText("Premium");
-            virarPremiumBtn.setDisable(true);
 
             controleUsuario.atualizarPlaylistsDeUsuario();
 
@@ -336,13 +331,13 @@ public class PlayerController {
                     });
                 }
             });
+        } else {
+            btnCriarPlaylist.setDisable(true);
+            btnRemovePlaylist.setDisable(true);
+            btnAddMusicaPlaylist.setDisable(true);
         }
     }
 
-    @FXML
-    void chooseMusic(MouseEvent event) {
-
-    }
 
 
 

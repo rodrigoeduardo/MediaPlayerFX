@@ -25,7 +25,6 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="virarPremiumBtn" layoutX="69.0" layoutY="102.0" mnemonicParsing="false" text="Virar Premium!" />
             <ListView fx:id="lvPlaylistsDoUsuario" layoutX="17.0" layoutY="168.0" prefHeight="340.0" prefWidth="200.0" />
             <Label layoutX="17.0" layoutY="150.0" text="Playlists" />
          </children>
@@ -97,7 +96,7 @@
             <Insets left="15.0" right="15.0" />
          </padding>
          <children>
-            <Button fx:id="btnAddMusica" mnemonicParsing="false" onAction="#cadastrarMusica" text="Cadastar Música" />
+            <Button fx:id="btnAddMusica" mnemonicParsing="false" onAction="#cadastrarMusica" text="Cadastrar Música" />
             <Button fx:id="btnCriarPlaylist" mnemonicParsing="false" onAction="#criarPlaylist" text="Criar Playlist" />
             <Button fx:id="btnRemovePlaylist" mnemonicParsing="false" onAction="#removerPlaylist" text="Remover Playlist" />
             <Button fx:id="btnAddMusicaPlaylist" mnemonicParsing="false" onAction="#addMusicaPlaylistAtual" text="Add Música na playlist atual" />

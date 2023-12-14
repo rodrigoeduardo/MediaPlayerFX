@@ -61,9 +61,9 @@ public class ControlePlaylist {
     public void adicionarMusicaNaPlaylist(Playlist playlist, Musica musica, Usuario usuarioLogado){
         if (usuarioLogado instanceof UsuarioPremium){
             ControleMusica controlerMusica = ControleMusica.getInstancia();
-            for (Musica musicaCadastrada : controlerMusica.obterMusicasCadastradas()){
-                if (musica.equals(musicaCadastrada)){
-                    if (playlist.getMusicas().indexOf(musica) == -1){
+//            for (Musica musicaCadastrada : controlerMusica.obterMusicasCadastradas()){
+//                if (musica.equals(musicaCadastrada)){
+//                    if (playlist.getMusicas().indexOf(musica) == -1){
                         playlist.adicionarMusica(musica);
                         try {
                             Utils.escreverLinhaArquivo("db/playlist_" + playlist.getNome() + "_" + usuarioLogado.getUsername() + ".txt",
@@ -72,10 +72,10 @@ public class ControlePlaylist {
                             e.printStackTrace();
                         }
                         return;
-                    }
-                }
-            }
-            System.out.println("Música não cadastrada no diretório ou já presente na playlist");
+//                    }
+//                }
+//            }
+//            System.out.println("Música não cadastrada no diretório ou já presente na playlist");
         } else {
             return;
         }
