@@ -21,7 +21,8 @@ public class PlayerController {
     @FXML
     private Button virarPremiumBtn;
 
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private Media media = new Media("C:/Users/vgmen/Music/playlist/Big in Japan (Remaster).mp3");
+    private MediaPlayer mediaPlayer = new MediaPlayer(media);
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
 
