@@ -1,10 +1,12 @@
 package br.ufrn.imd.mediaplayerfx.controle;
 
 import br.ufrn.imd.controle.ControleUsuario;
+import br.ufrn.imd.modelo.Playlist;
 import br.ufrn.imd.modelo.UsuarioPremium;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.media.MediaPlayer;
 
 public class PlayerController {
     @FXML
@@ -13,6 +15,8 @@ public class PlayerController {
     private Label tipoContaUsuario;
     @FXML
     private Button virarPremiumBtn;
+    @FXML
+    private ListView<Playlist> playlistsDoUsuario;
 
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
@@ -24,4 +28,6 @@ public class PlayerController {
             virarPremiumBtn.setDisable(true);
         }
     }
+
+
 }
