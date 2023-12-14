@@ -333,4 +333,7 @@ public class PlayerController {
     public void setTempoAtual(double tempoAtual) {
         this.tempoAtual = tempoAtual;
     }
+
+    public void mudarTempoDaMusica(MouseEvent mouseEvent) {
+    }
 }
