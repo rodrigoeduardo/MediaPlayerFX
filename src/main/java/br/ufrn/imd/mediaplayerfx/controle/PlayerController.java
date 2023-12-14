@@ -128,6 +128,8 @@ public class PlayerController {
             controleMusica.cadastrarMusica(nomeTratado, "nao sei", file.getParent());
             System.out.println("Música cadastrada: " + nomeTratado);
 
+            diretorioGeral = controleMusica.obterMusicasCadastradas();
+
             obsDiretorioGeral = FXCollections.observableArrayList(diretorioGeral);
             lvDiretorioGeral.setItems(obsDiretorioGeral);
         }
