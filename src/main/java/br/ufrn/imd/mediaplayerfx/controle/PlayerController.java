@@ -12,10 +12,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +22,7 @@ import javafx.util.Duration;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 
 public class PlayerController {
     private MediaPlayer mediaPlayer;
@@ -116,23 +114,77 @@ public class PlayerController {
     void cadastrarMusica(ActionEvent event) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Selecione sua música");
-        chooser.setInitialDirectory(new File("./db/Musicas-mp3/"));
+        chooser.setInitialDirectory(new File("./db/musicas/"));
         File file = chooser.showOpenDialog(null);
         if(file != null){
             String selectedFile = file.toURI().toString();
+
+            String nomeTratado = selectedFile.replace("%20", " ").replace("file:/", "");
+            nomeTratado = nomeTratado.replace(file.getParent().replace("file:/", "").replace("\\", "/"), "").replace("/", "");
+
+            System.out.println("Pai: " + file.getParent().replace("file:/", "").replace("\\", "/"));
+
             ControleMusica controleMusica = ControleMusica.getInstancia();
-            controleMusica.cadastrarMusica(selectedFile, "nao sei", file.getAbsolutePath());
+            controleMusica.cadastrarMusica(nomeTratado, "nao sei", file.getParent());
+            System.out.println("Música cadastrada: " + nomeTratado);
+
+            obsDiretorioGeral = FXCollections.observableArrayList(diretorioGeral);
+            lvDiretorioGeral.setItems(obsDiretorioGeral);
         }
     }
 
     @FXML
     void criarPlaylist(ActionEvent event) {
+        ControleUsuario controleUsuario = ControleUsuario.getInstancia();
+        ControlePlaylist controlePlaylist = new ControlePlaylist();
+        if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium){
 
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Create Playlist");
+            dialog.setHeaderText("Enter the name of the new playlist:");
+            dialog.setContentText("Name:");
+
+
+            Optional<String> result = dialog.showAndWait();
+
+            result.ifPresent(name -> {
+                System.out.println("Nome de playlist: " + name);
+                controlePlaylist.adicionarPlaylist(name, controleUsuario.getUsuarioLogado());
+                controleUsuario.atualizarPlaylistsDeUsuario();
+
+                playlistsDeUsuarioLogado = ((UsuarioPremium) controleUsuario.getUsuarioLogado()).getPlaylists();
+
+                obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
+                lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
+            });
+        }
     }
 
     @FXML
     void removerPlaylist(ActionEvent event) {
+        ControleUsuario controleUsuario = ControleUsuario.getInstancia();
+        ControlePlaylist controlePlaylist = new ControlePlaylist();
+        if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium){
 
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Create Playlist");
+            dialog.setHeaderText("Enter the name of the new playlist:");
+            dialog.setContentText("Name:");
+
+
+            Optional<String> result = dialog.showAndWait();
+
+            result.ifPresent(name -> {
+                System.out.println("Playlist Nome: " + name);
+                controlePlaylist.removerPlaylist(name, controleUsuario.getUsuarioLogado());
+                controleUsuario.atualizarPlaylistsDeUsuario();
+
+                playlistsDeUsuarioLogado = ((UsuarioPremium) controleUsuario.getUsuarioLogado()).getPlaylists();
+
+                obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
+                lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
+            });
+        }
     }
 
     @FXML
