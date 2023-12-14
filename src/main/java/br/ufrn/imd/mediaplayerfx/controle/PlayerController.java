@@ -57,8 +57,6 @@ public class PlayerController {
 
     private List<Playlist> playlistsDeUsuarioLogado;
 
-    @FXML
-    private Button btnAddDiretorio;
 
     @FXML
     private Button btnAddMusica;
@@ -100,35 +98,35 @@ public class PlayerController {
 
     private Playlist playlistAtual;
 
-    @FXML
-    void addDiretorio(ActionEvent event) {
+    private Musica ultimaMusica;
 
-    }
 
     @FXML
     void addMusicaPlaylistAtual(ActionEvent event) {
-        ControleMusica controleMusica = ControleMusica.getInstancia();
-        diretorioGeral = controleMusica.obterMusicasCadastradas();
+        if (playlistAtual != null){
+            ControleMusica controleMusica = ControleMusica.getInstancia();
+            diretorioGeral = controleMusica.obterMusicasCadastradas();
 
-        ChoiceDialog<Musica> dialog = new ChoiceDialog<>(diretorioGeral.get(0), diretorioGeral);
-        dialog.setTitle("Selecione uma música");
-        dialog.setHeaderText("Escolha uma música do diretório:");
-        dialog.setContentText("Musica:");
+            ChoiceDialog<Musica> dialog = new ChoiceDialog<>(diretorioGeral.get(0), diretorioGeral);
+            dialog.setTitle("Selecione uma música");
+            dialog.setHeaderText("Escolha uma música do diretório:");
+            dialog.setContentText("Musica:");
 
-        Optional<Musica> result = dialog.showAndWait();
+            Optional<Musica> result = dialog.showAndWait();
 
-        result.ifPresent(selectedItem -> {
-            System.out.println("Selected Item: " + selectedItem);
+            result.ifPresent(selectedItem -> {
+                System.out.println("Selected Item: " + selectedItem);
 
-            ControlePlaylist controlePlaylist = new ControlePlaylist();
-            ControleUsuario controleUsuario = ControleUsuario.getInstancia();
+                ControlePlaylist controlePlaylist = new ControlePlaylist();
+                ControleUsuario controleUsuario = ControleUsuario.getInstancia();
 
-            controlePlaylist.adicionarMusicaNaPlaylist(playlistAtual, selectedItem, controleUsuario.getUsuarioLogado());
-            controleUsuario.atualizarPlaylistsDeUsuario();
+                controlePlaylist.adicionarMusicaNaPlaylist(playlistAtual, selectedItem, controleUsuario.getUsuarioLogado());
+                controleUsuario.atualizarPlaylistsDeUsuario();
 
-            obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
-            lvPlayListAtual.setItems(obsPlaylistAtual);
-        });
+                obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
+                lvPlayListAtual.setItems(obsPlaylistAtual);
+            });
+        }
     }
 
     @FXML
@@ -222,10 +220,7 @@ public class PlayerController {
 
     @FXML
     void continuarMusica(ActionEvent event) {
-        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
-            return;
-        }
-        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PAUSED)) {
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PAUSED) && ultimaMusica == null) {
             mediaPlayer.play();
             return;
         }
@@ -233,6 +228,10 @@ public class PlayerController {
         if (musicaAtual == null) {
             System.out.println("Sem música");
             return;
+        }
+
+        if (mediaPlayer != null){
+            mediaPlayer.stop();
         }
 
         lblMusicaAtual.setText(musicaAtual.getNome());
@@ -298,6 +297,9 @@ public class PlayerController {
         // listener de diretório geral
         lvDiretorioGeral.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
+                if (musicaAtual != null){
+                    ultimaMusica = musicaAtual;
+                }
                 musicaAtual = newValue;
                 System.out.println("Selected Musica from Diretorio: " + musicaAtual);
             }
@@ -325,6 +327,9 @@ public class PlayerController {
 
                     lvPlayListAtual.getSelectionModel().selectedItemProperty().addListener((observable2, oldValue2, newValue2) -> {
                         if (newValue2 != null) {
+                            if (musicaAtual != null){
+                                ultimaMusica = musicaAtual;
+                            }
                             musicaAtual = newValue2;
                             System.out.println("Selected Musica from Playlist" + musicaAtual);
                         }

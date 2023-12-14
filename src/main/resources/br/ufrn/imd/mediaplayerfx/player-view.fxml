@@ -97,7 +97,6 @@
             <Insets left="15.0" right="15.0" />
          </padding>
          <children>
-            <Button fx:id="btnAddDiretorio" mnemonicParsing="false" onAction="#addDiretorio" text=" Add Diretório" />
             <Button fx:id="btnAddMusica" mnemonicParsing="false" onAction="#cadastrarMusica" text="Cadastar Música" />
             <Button fx:id="btnCriarPlaylist" mnemonicParsing="false" onAction="#criarPlaylist" text="Criar Playlist" />
             <Button fx:id="btnRemovePlaylist" mnemonicParsing="false" onAction="#removerPlaylist" text="Remover Playlist" />
