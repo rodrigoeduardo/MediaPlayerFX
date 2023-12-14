@@ -79,4 +79,9 @@ public class Musica {
   public void setDiretorio(String novoDiretorio) {
     this.diretorio = novoDiretorio;
   }
+
+  @Override
+  public String toString(){
+    return getNome();
+  }
 }

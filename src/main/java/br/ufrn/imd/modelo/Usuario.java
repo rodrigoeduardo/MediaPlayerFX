@@ -55,4 +55,9 @@ public class Usuario {
   public void virarPremium() {
 
   }
+
+  @Override
+  public String toString(){
+    return getUsername();
+  }
 }

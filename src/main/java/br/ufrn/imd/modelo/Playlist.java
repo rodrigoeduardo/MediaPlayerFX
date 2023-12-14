@@ -66,4 +66,9 @@ public class Playlist {
   public List<Musica> getMusicas() {
     return this.musicas;
   }
+
+  @Override
+  public String toString(){
+    return getNome();
+  }
 }
