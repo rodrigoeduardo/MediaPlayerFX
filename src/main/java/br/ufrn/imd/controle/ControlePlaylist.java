@@ -38,9 +38,8 @@ public class ControlePlaylist {
      * @param playlist A playlist a ser removida.
      * @param usuarioLogado O usuário logado que está removendo a playlist.
      */
-    public void removerPlaylist(Playlist playlist, Usuario usuarioLogado) {
+    public void removerPlaylist(String playlist, Usuario usuarioLogado) {
         if (usuarioLogado instanceof UsuarioPremium){
-            ((UsuarioPremium) usuarioLogado).removerPlaylist(playlist);
             try {
                 removerPlaylistArquivo(playlist, usuarioLogado);
             } catch (Exception e) {
@@ -100,12 +99,11 @@ public class ControlePlaylist {
 
     /**
      * Remove um arquivo no molde playlist_nomePlaylist_usuario.txt do db.
-     * @param playlist A playlist cujo arquivo deve ser removido.
+     * @param nomePlaylist A playlist cujo arquivo deve ser removido.
      * @param usuario O usuário associado à playlist.
      * @throws IOException Se houver um problema ao remover o arquivo.
      */
-    private static void removerPlaylistArquivo(Playlist playlist, Usuario usuario) throws IOException{
-        String nomePlaylist = playlist.getNome();
+    private static void removerPlaylistArquivo(String nomePlaylist, Usuario usuario) throws IOException{
         File file = new File("db/playlist_" + nomePlaylist + "_" + usuario.getUsername() + ".txt");
 
         if (file.exists()) {
