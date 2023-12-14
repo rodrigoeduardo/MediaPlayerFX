@@ -98,8 +98,8 @@
          </padding>
          <children>
             <Button fx:id="btnAddDiretorio" mnemonicParsing="false" text=" Add Diretório" />
-            <Button fx:id="btnAddMusica" mnemonicParsing="false" text="Cadastar Música" />
-            <Button mnemonicParsing="false" text="Criar Playlist" />
+            <Button fx:id="btnAddMusica" mnemonicParsing="false" onAction="#cadastrarMusica" text="Cadastar Música" />
+            <Button fx:id="btnCriarPlaylist" mnemonicParsing="false" text="Criar Playlist" />
             <Button fx:id="btnRemovePlaylist" mnemonicParsing="false" text="Remover Playlist" />
             <Button fx:id="btnAddMusicaPlaylist" mnemonicParsing="false" text="Add Música na playlist atual" />
          </children>

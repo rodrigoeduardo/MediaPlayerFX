@@ -69,6 +69,9 @@ public class PlayerController {
     private Button btnAddMusicaPlaylist;
 
     @FXML
+    private Button btnCriarPlaylist;
+
+    @FXML
     private Button btnPause;
 
     @FXML
@@ -99,6 +102,38 @@ public class PlayerController {
 
     private Playlist playlistAtual;
 
+    @FXML
+    void addDiretorio(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addMusicaPlaylistAtual(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cadastrarMusica(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Selecione sua música");
+        chooser.setInitialDirectory(new File("./db/Musicas-mp3/"));
+        File file = chooser.showOpenDialog(null);
+        if(file != null){
+            String selectedFile = file.toURI().toString();
+            ControleMusica controleMusica = ControleMusica.getInstancia();
+            controleMusica.cadastrarMusica(selectedFile, "nao sei", file.getAbsolutePath());
+        }
+    }
+
+    @FXML
+    void criarPlaylist(ActionEvent event) {
+
+    }
+
+    @FXML
+    void removerPlaylist(ActionEvent event) {
+
+    }
 
     @FXML
     void btnPause(MouseEvent event) {
@@ -226,15 +261,7 @@ public class PlayerController {
 
     @FXML
     void chooseMusic(MouseEvent event) {
-        FileChooser chooser = new FileChooser();
-        chooser.setTitle("Select your music");
-        File file = chooser.showOpenDialog(null);
-        if(file != null){
-            String selectedFile = file.toURI().toString();
-            Media media = new Media(selectedFile);
-            mediaPlayer = new MediaPlayer(media);
-            mediaPlayer.setOnReady(() -> chooseMusic.setText(file.getName()));
-        }
+
     }
 
 
