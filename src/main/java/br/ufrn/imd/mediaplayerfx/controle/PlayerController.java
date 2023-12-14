@@ -30,6 +30,7 @@ public class PlayerController {
     private Label tipoContaUsuario;
     @FXML
     private Button virarPremiumBtn;
+
     @FXML
     private ListView<Playlist> lvPlaylistsDoUsuario;
 
@@ -71,14 +72,18 @@ public class PlayerController {
     private int tempoAtual;
 
     @FXML
-    private ListView<?> diretorioGeral;
+    private ListView<Musica> lvDiretorioGeral;
+
 
     @FXML
     private Label lblDuration;
 
     @FXML
-    private ListView<?> playListAtual;
+    private ListView<Musica> lvPlayListAtual;
 
+    private ObservableList<Musica> obsPlaylistAtual;
+
+    private Playlist playlistAtual;
 
 
     @FXML
@@ -127,6 +132,18 @@ public class PlayerController {
             playlistsDeUsuarioLogado = ((UsuarioPremium)controleUsuario.getUsuarioLogado()).getPlaylists();
             obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
             lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
+
+            lvPlaylistsDoUsuario.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    playlistAtual = newValue;
+                    System.out.println("Selected Playlist: " + playlistAtual);
+                    System.out.println("Musicas playlist: " + playlistAtual.getMusicas());
+
+                    // Assuming getMusicas() returns a List<Musica> from the selected playlist
+                    obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
+                    lvPlayListAtual.setItems(obsPlaylistAtual);
+                }
+            });
         }
     }
 
