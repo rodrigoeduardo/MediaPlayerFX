@@ -1,9 +1,13 @@
 package br.ufrn.imd.mediaplayerfx.controle;
 
+import br.ufrn.imd.controle.ControlePlaylist;
 import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.controle.ControleUsuario;
 import br.ufrn.imd.modelo.Playlist;
 import br.ufrn.imd.modelo.UsuarioPremium;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
 import java.io.File;
+import java.util.List;
 
 public class PlayerController {
     @FXML
@@ -26,7 +31,12 @@ public class PlayerController {
     @FXML
     private Button virarPremiumBtn;
     @FXML
-    private ListView<Playlist> playlistsDoUsuario;
+    private ListView<Playlist> lvPlaylistsDoUsuario;
+
+    private ObservableList<Playlist> obsPlaylistsDoUsuario;
+
+    private List<Playlist> playlistsDeUsuarioLogado;
+
     @FXML
     private Button btnAddDiretorio;
 
@@ -111,6 +121,12 @@ public class PlayerController {
         if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium) {
             tipoContaUsuario.setText("Premium");
             virarPremiumBtn.setDisable(true);
+
+            controleUsuario.atualizarPlaylistsDeUsuario();
+
+            playlistsDeUsuarioLogado = ((UsuarioPremium)controleUsuario.getUsuarioLogado()).getPlaylists();
+            obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
+            lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
         }
     }
 
