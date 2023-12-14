@@ -50,6 +50,9 @@ public class PlayerController {
     private Button btnAddMusicaPlaylist;
 
     @FXML
+    private Button btnCriarPlaylist;
+
+    @FXML
     private Button btnPause;
 
     @FXML
@@ -92,6 +95,30 @@ public class PlayerController {
 
     private Playlist playlistAtual;
 
+    @FXML
+    void addDiretorio(ActionEvent event) {
+
+    }
+
+    @FXML
+    void addMusicaPlaylistAtual(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cadastrarMusica(ActionEvent event) {
+
+    }
+
+    @FXML
+    void criarPlaylist(ActionEvent event) {
+
+    }
+
+    @FXML
+    void removerPlaylist(ActionEvent event) {
+
+    }
 
     @FXML
     void btnPause(MouseEvent event) {
