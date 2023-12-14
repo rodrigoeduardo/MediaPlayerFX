@@ -1,6 +1,7 @@
 module br.ufrn.imd.mediaplayerfx {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
     opens br.ufrn.imd.mediaplayerfx to javafx.fxml;
