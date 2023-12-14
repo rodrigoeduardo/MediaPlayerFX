@@ -36,7 +36,8 @@ public class PlayerController {
     /**
      * A música atualmente em reprodução.
      */
-    private Musica musicaAtual = new Musica("Big in Japan (Remaster)", "Desconhecido", "");
+    private Musica musicaAtual;
+//            = new Musica("Big in Japan (Remaster)", "Desconhecido", "");
 
     /**
      * O tempo atual de reprodução da música, em segundos.
@@ -77,7 +78,7 @@ public class PlayerController {
     private Button btnRemovePlaylist;
 
     @FXML
-    private final Label lblMusicaAtual = new Label();
+    private Label lblMusicaAtual;
 
     @FXML
     private ListView<Musica> lvDiretorioGeral;
@@ -111,6 +112,11 @@ public class PlayerController {
 
     @FXML
     void continuarMusica(ActionEvent event) {
+        lblMusicaAtual.setText(musicaAtual.getNome());
+        if (musicaAtual == null) {
+            System.out.println("Sem música");
+            return;
+        }
         String musica = "db/Musicas-mp3/" + musicaAtual.getNome() + ".mp3";
         Media media = new Media(new File(musica).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
@@ -168,14 +174,11 @@ public class PlayerController {
         obsDiretorioGeral = FXCollections.observableArrayList(controleMusica.musicasCadastradas);
         lvDiretorioGeral.setItems(obsDiretorioGeral);
 
-        lblMusicaAtual.setText("musica aaa");
         // listener de diretório geral
         lvDiretorioGeral.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 musicaAtual = newValue;
                 System.out.println("Selected Musica from Diretorio: " + musicaAtual);
-                System.out.println("Label: " + lblMusicaAtual.getText());
-                // TODO: tocar musica atual
             }
         });
 
@@ -202,10 +205,7 @@ public class PlayerController {
                     lvPlayListAtual.getSelectionModel().selectedItemProperty().addListener((observable2, oldValue2, newValue2) -> {
                         if (newValue2 != null) {
                             musicaAtual = newValue2;
-                            System.out.println("Selected Musica from Diretorio: " + musicaAtual);
-
-//                            lblMusicaAtual.setText(musicaAtual.getNome());
-                            // TODO: tocar musica atual
+                            System.out.println("Selected Musica from Playlist" + musicaAtual);
                         }
                     });
                 }
