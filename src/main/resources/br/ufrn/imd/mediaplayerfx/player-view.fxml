@@ -36,7 +36,7 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="1280.0">
                <children>
-                  <Slider fx:id="tempoMusicaSlider" HBox.hgrow="ALWAYS">
+                  <Slider fx:id="tempoMusicaSlider" onMouseClicked="#mudarTempoDaMusica" HBox.hgrow="ALWAYS">
                      <padding>
                         <Insets left="15.0" right="15.0" />
                      </padding>

@@ -112,12 +112,21 @@ public class PlayerController {
 
     @FXML
     void continuarMusica(ActionEvent event) {
-        lblMusicaAtual.setText(musicaAtual.getNome());
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PLAYING)) {
+            return;
+        }
+        if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PAUSED)) {
+            mediaPlayer.play();
+            return;
+        }
+
         if (musicaAtual == null) {
             System.out.println("Sem música");
             return;
         }
-        String musica = "db/Musicas-mp3/" + musicaAtual.getNome() + ".mp3";
+
+        lblMusicaAtual.setText(musicaAtual.getNome());
+        String musica = "db/musicas/" + musicaAtual.getNome() + ".mp3";
         Media media = new Media(new File(musica).toURI().toString());
         mediaPlayer = new MediaPlayer(media);
         mediaPlayer.play();
@@ -142,21 +151,23 @@ public class PlayerController {
         );
         tempoMusicaSlider.valueProperty().bind(
                 Bindings.createDoubleBinding(() -> {
-                    Duration current = mediaPlayer.getCurrentTime();
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    tempoAtual = current;
 
-                    return current.toSeconds();
+                    return current;
                 }, mediaPlayer.currentTimeProperty())
         );
     }
 
     @FXML
     void pausarMusica(ActionEvent event) {
+        lblMusicaAtual.setText("Pausado");
         mediaPlayer.pause();
     }
 
     @FXML
     void tocarMusicaAnterior(ActionEvent event) {
-        System.out.println(mediaPlayer.getCurrentTime().toSeconds());
+
     }
 
     @FXML
