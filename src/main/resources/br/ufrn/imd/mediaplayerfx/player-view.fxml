@@ -26,7 +26,7 @@
                </font>
             </Label>
             <Button fx:id="virarPremiumBtn" layoutX="69.0" layoutY="102.0" mnemonicParsing="false" text="Virar Premium!" />
-            <ListView fx:id="playlistsDoUsuario" layoutX="17.0" layoutY="168.0" prefHeight="340.0" prefWidth="200.0" />
+            <ListView fx:id="lvPlaylistsDoUsuario" layoutX="17.0" layoutY="168.0" prefHeight="340.0" prefWidth="200.0" />
             <Label layoutX="17.0" layoutY="150.0" text="Playlists" />
          </children>
       </AnchorPane>
