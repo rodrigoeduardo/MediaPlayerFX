@@ -6,6 +6,7 @@ import br.ufrn.imd.controle.ControleUsuario;
 import br.ufrn.imd.modelo.Playlist;
 import br.ufrn.imd.modelo.UsuarioPremium;
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,15 +14,33 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
+
 import java.io.File;
 import java.util.List;
 
 public class PlayerController {
+    private MediaPlayer mediaPlayer;
+    /**
+     * A classe Player representa um reprodutor de músicas que pode tocar, pausar, continuar, avançar para a próxima
+     * música e voltar para a música anterior.
+     */
+
+    /**
+     * A música atualmente em reprodução.
+     */
+    private Musica musicaAtual = new Musica("Big in Japan (Remaster)", "Desconhecido", "");
+
+    /**
+     * O tempo atual de reprodução da música, em segundos.
+     */
+    private double tempoAtual;
     @FXML
     private Label chooseMusic;
     @FXML
@@ -56,27 +75,14 @@ public class PlayerController {
     @FXML
     private Button btnRemovePlaylist;
 
-    /**
-     * A classe Player representa um reprodutor de músicas que pode tocar, pausar, continuar, avançar para a próxima
-     * música e voltar para a música anterior.
-     */
-
-    /**
-     * A música atualmente em reprodução.
-     */
-    private Musica musicaAtual;
-
-    /**
-     * O tempo atual de reprodução da música, em segundos.
-     */
-    private int tempoAtual;
-
     @FXML
     private ListView<Musica> lvDiretorioGeral;
 
 
     @FXML
     private Label lblDuration;
+    @FXML
+    private Slider tempoMusicaSlider;
 
     @FXML
     private ListView<Musica> lvPlayListAtual;
@@ -98,17 +104,46 @@ public class PlayerController {
 
     @FXML
     void continuarMusica(ActionEvent event) {
+        String musica = "db/Musicas-mp3/" + musicaAtual.getNome() + ".mp3";
+        Media media = new Media(new File(musica).toURI().toString());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
 
+        lblDuration.textProperty().bind(
+                Bindings.createStringBinding(() -> {
+                    double tempo = mediaPlayer.getCurrentTime().toSeconds();
+
+                    int minutos = 0;
+
+                    while (tempo >= 60) {
+                        tempo -= 60;
+                        minutos++;
+                    }
+
+                    return String.format("%02d:%02d", minutos, (int)tempo);
+                }, mediaPlayer.currentTimeProperty())
+        );
+
+        tempoMusicaSlider.maxProperty().bind(
+                Bindings.createDoubleBinding(() -> media.getDuration().toSeconds(), media.durationProperty())
+        );
+        tempoMusicaSlider.valueProperty().bind(
+                Bindings.createDoubleBinding(() -> {
+                    Duration current = mediaPlayer.getCurrentTime();
+
+                    return current.toSeconds();
+                }, mediaPlayer.currentTimeProperty())
+        );
     }
 
     @FXML
     void pausarMusica(ActionEvent event) {
-
+        mediaPlayer.pause();
     }
 
     @FXML
     void tocarMusicaAnterior(ActionEvent event) {
-
+        System.out.println(mediaPlayer.getCurrentTime().toSeconds());
     }
 
     @FXML
@@ -116,8 +151,6 @@ public class PlayerController {
 
     }
 
-    //private Media media = new Media("C:/Users/vgmen/Music/playlist/Big in Japan (Remaster).mp3");
-    private MediaPlayer mediaPlayer;
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
 
@@ -218,7 +251,7 @@ public class PlayerController {
      * Obtém o tempo atual de reprodução da música, em segundos.
      * @return Tempo atual de reprodução da música.
      */
-    public int getTempoAtual() {
+    public double getTempoAtual() {
         return tempoAtual;
     }
 
@@ -226,7 +259,7 @@ public class PlayerController {
      * Define o tempo atual de reprodução da música, em segundos.
      * @param tempoAtual O tempo atual de reprodução da música a ser definido.
      */
-    public void setTempoAtual(int tempoAtual) {
+    public void setTempoAtual(double tempoAtual) {
         this.tempoAtual = tempoAtual;
     }
 }
