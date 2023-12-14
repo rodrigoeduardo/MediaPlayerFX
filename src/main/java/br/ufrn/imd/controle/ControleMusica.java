@@ -47,16 +47,19 @@ public class ControleMusica {
      * @param diretorio O diretório onde a música está localizada.
      */
     public void cadastrarMusica(String nome, String artista, String diretorio) {
-        File mp3File = new File("db/musicasMP3/" + nome + ".mp3");
+        String nomeTratado = nome.replace("%20", " ").replace("file:/", "");
+        File mp3File = new File(diretorio + "/" + nomeTratado);
         if (!mp3File.exists()){
-            System.out.println("Música " + nome + " não existente no diretório");
+            System.out.println("Música " + nomeTratado + " não existente no diretório");
             return;
         }
 
-        this.musicasCadastradas.add(new Musica(nome, artista, diretorio));
+        nomeTratado = nomeTratado.replace(mp3File.getParent().replace("file:/", ""), "");
+
+        this.musicasCadastradas.add(new Musica(nomeTratado, artista, diretorio));
 
         try{
-            Utils.escreverLinhaArquivo("db/musicas.txt", (nome + "," + artista));
+            Utils.escreverLinhaArquivo("db/musicas.txt", ( nomeTratado + "," + artista + "," + diretorio));
         } catch (IOException e){
             e.printStackTrace();
             return;
