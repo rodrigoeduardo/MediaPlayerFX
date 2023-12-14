@@ -1,5 +1,6 @@
 package br.ufrn.imd.mediaplayerfx.controle;
 
+import br.ufrn.imd.controle.ControleMusica;
 import br.ufrn.imd.controle.ControlePlaylist;
 import br.ufrn.imd.modelo.Musica;
 import br.ufrn.imd.controle.ControleUsuario;
@@ -76,8 +77,14 @@ public class PlayerController {
     private Button btnRemovePlaylist;
 
     @FXML
+    private final Label lblMusicaAtual = new Label();
+
+    @FXML
     private ListView<Musica> lvDiretorioGeral;
 
+    private ObservableList<Musica> obsDiretorioGeral;
+
+    private List<Musica> diretorioGeral;
 
     @FXML
     private Label lblDuration;
@@ -153,8 +160,24 @@ public class PlayerController {
 
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
+        ControleMusica controleMusica = ControleMusica.getInstancia();
 
         username.setText(controleUsuario.getUsuarioLogado().getUsername());
+
+        controleMusica.obterMusicasCadastradas();
+        obsDiretorioGeral = FXCollections.observableArrayList(controleMusica.musicasCadastradas);
+        lvDiretorioGeral.setItems(obsDiretorioGeral);
+
+        lblMusicaAtual.setText("musica aaa");
+        // listener de diretório geral
+        lvDiretorioGeral.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                musicaAtual = newValue;
+                System.out.println("Selected Musica from Diretorio: " + musicaAtual);
+                System.out.println("Label: " + lblMusicaAtual.getText());
+                // TODO: tocar musica atual
+            }
+        });
 
         if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium) {
             tipoContaUsuario.setText("Premium");
@@ -166,15 +189,25 @@ public class PlayerController {
             obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
             lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
 
+            // listener de playlists de usuario
             lvPlaylistsDoUsuario.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     playlistAtual = newValue;
                     System.out.println("Selected Playlist: " + playlistAtual);
                     System.out.println("Musicas playlist: " + playlistAtual.getMusicas());
 
-                    // Assuming getMusicas() returns a List<Musica> from the selected playlist
                     obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
                     lvPlayListAtual.setItems(obsPlaylistAtual);
+
+                    lvPlayListAtual.getSelectionModel().selectedItemProperty().addListener((observable2, oldValue2, newValue2) -> {
+                        if (newValue2 != null) {
+                            musicaAtual = newValue2;
+                            System.out.println("Selected Musica from Diretorio: " + musicaAtual);
+
+//                            lblMusicaAtual.setText(musicaAtual.getNome());
+                            // TODO: tocar musica atual
+                        }
+                    });
                 }
             });
         }
