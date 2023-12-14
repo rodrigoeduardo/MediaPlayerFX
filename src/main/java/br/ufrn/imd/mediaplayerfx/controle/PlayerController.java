@@ -107,6 +107,9 @@ public class PlayerController {
 
     @FXML
     void addMusicaPlaylistAtual(ActionEvent event) {
+        ControleMusica controleMusica = ControleMusica.getInstancia();
+        diretorioGeral = controleMusica.obterMusicasCadastradas();
+
         ChoiceDialog<Musica> dialog = new ChoiceDialog<>(diretorioGeral.get(0), diretorioGeral);
         dialog.setTitle("Selecione uma música");
         dialog.setHeaderText("Escolha uma música do diretório:");
@@ -121,6 +124,7 @@ public class PlayerController {
             ControleUsuario controleUsuario = ControleUsuario.getInstancia();
 
             controlePlaylist.adicionarMusicaNaPlaylist(playlistAtual, selectedItem, controleUsuario.getUsuarioLogado());
+            controleUsuario.atualizarPlaylistsDeUsuario();
 
             obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
             lvPlayListAtual.setItems(obsPlaylistAtual);
