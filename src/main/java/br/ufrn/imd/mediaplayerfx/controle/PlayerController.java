@@ -107,7 +107,24 @@ public class PlayerController {
 
     @FXML
     void addMusicaPlaylistAtual(ActionEvent event) {
+        ChoiceDialog<Musica> dialog = new ChoiceDialog<>(diretorioGeral.get(0), diretorioGeral);
+        dialog.setTitle("Selecione uma música");
+        dialog.setHeaderText("Escolha uma música do diretório:");
+        dialog.setContentText("Musica:");
 
+        Optional<Musica> result = dialog.showAndWait();
+
+        result.ifPresent(selectedItem -> {
+            System.out.println("Selected Item: " + selectedItem);
+
+            ControlePlaylist controlePlaylist = new ControlePlaylist();
+            ControleUsuario controleUsuario = ControleUsuario.getInstancia();
+
+            controlePlaylist.adicionarMusicaNaPlaylist(playlistAtual, selectedItem, controleUsuario.getUsuarioLogado());
+
+            obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
+            lvPlayListAtual.setItems(obsPlaylistAtual);
+        });
     }
 
     @FXML
@@ -142,9 +159,9 @@ public class PlayerController {
         if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium){
 
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Create Playlist");
-            dialog.setHeaderText("Enter the name of the new playlist:");
-            dialog.setContentText("Name:");
+            dialog.setTitle("Criar playlist");
+            dialog.setHeaderText("Digite o nome da playlist a ser criada:");
+            dialog.setContentText("Nome:");
 
 
             Optional<String> result = dialog.showAndWait();
@@ -169,9 +186,9 @@ public class PlayerController {
         if (controleUsuario.getUsuarioLogado() instanceof UsuarioPremium){
 
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Create Playlist");
-            dialog.setHeaderText("Enter the name of the new playlist:");
-            dialog.setContentText("Name:");
+            dialog.setTitle("Remover playlist");
+            dialog.setHeaderText("Digite o nome da playlist a ser removida:");
+            dialog.setContentText("Nome:");
 
 
             Optional<String> result = dialog.showAndWait();
