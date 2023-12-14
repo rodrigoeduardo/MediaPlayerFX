@@ -56,10 +56,10 @@ public class ControleMusica {
 
         nomeTratado = nomeTratado.replace(mp3File.getParent().replace("file:/", ""), "");
 
-        this.musicasCadastradas.add(new Musica(nomeTratado, artista, diretorio));
+        this.musicasCadastradas.add(new Musica(nomeTratado.replace(".mp3", ""), artista, diretorio));
 
         try{
-            Utils.escreverLinhaArquivo("db/musicas.txt", ( nomeTratado + "," + artista + "," + diretorio));
+            Utils.escreverLinhaArquivo("db/musicas.txt", ( nomeTratado.replace(".mp3", "") + "," + artista + "," + diretorio));
         } catch (IOException e){
             e.printStackTrace();
             return;
