@@ -104,7 +104,6 @@ public class ControleMusica {
 
             musicasCadastradas.add(new Musica(nomeMusica, artistaMusica, diretorioMusica));
         }
-
         return musicasCadastradas;
     }
 

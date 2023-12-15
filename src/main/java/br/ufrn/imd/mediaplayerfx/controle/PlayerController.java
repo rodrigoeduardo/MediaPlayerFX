@@ -12,7 +12,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.Media;
 import javafx.stage.FileChooser;
@@ -21,81 +20,150 @@ import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A classe PlayerController representa um reprodutor de músicas que pode tocar e pausar músicas do sistema
+ * ou de playlists personalizáveis, caso o usuário seja Premium.
+ */
 public class PlayerController {
-    private MediaPlayer mediaPlayer;
+
     /**
-     * A classe Player representa um reprodutor de músicas que pode tocar, pausar, continuar, avançar para a próxima
-     * música e voltar para a música anterior.
+     * Tocador de músicas .mp3.
      */
+    private MediaPlayer mediaPlayer;
 
     /**
      * A música atualmente em reprodução.
      */
     private Musica musicaAtual;
-//            = new Musica("Big in Japan (Remaster)", "Desconhecido", "");
 
     /**
      * O tempo atual de reprodução da música, em segundos.
      */
     private double tempoAtual;
-    @FXML
-    private Label chooseMusic;
+
+    /**
+     * Label de username.
+     */
     @FXML
     private Label username;
+
+    /**
+     * Label de tipo de conta, podendo ser Premium ou Free.
+     */
     @FXML
     private Label tipoContaUsuario;
 
+    /**
+     * ListView de playlists de usuário.
+     */
     @FXML
     private ListView<Playlist> lvPlaylistsDoUsuario;
 
+    /**
+     * Lista observável de playlists de usuário.
+     */
     private ObservableList<Playlist> obsPlaylistsDoUsuario;
 
+    /**
+     * Lista de playlists de usuário.
+     */
     private List<Playlist> playlistsDeUsuarioLogado;
 
-
+    /**
+     * Botão de cadastrar música.
+     */
     @FXML
     private Button btnAddMusica;
 
+    /**
+     * Botão de adicionar música na playlist.
+     */
     @FXML
     private Button btnAddMusicaPlaylist;
 
+    /**
+     * Botão de criar playlist pra usuário.
+     */
     @FXML
     private Button btnCriarPlaylist;
 
+    /**
+     * Botão de pausar música.
+     */
     @FXML
     private Button btnPause;
 
+    /**
+     * Botão de dar play na música.
+     */
     @FXML
     private Button btnPlay;
 
+    /**
+     * Botão de remover playlist de usuário.
+     */
     @FXML
     private Button btnRemovePlaylist;
 
+    /**
+     * Label de música tocando no momento.
+     */
     @FXML
     private Label lblMusicaAtual;
 
+    /**
+     * ListView de diretório com músicas cadastradas.
+     */
     @FXML
     private ListView<Musica> lvDiretorioGeral;
 
+    /**
+     * Lista observável de diretório com músicas cadastradas.
+     */
     private ObservableList<Musica> obsDiretorioGeral;
 
+    /**
+     * Lista de diretório com músicas cadastradas.
+     */
     private List<Musica> diretorioGeral;
 
+    /**
+     * Label de duração da música.
+     */
     @FXML
     private Label lblDuration;
+
+    /**
+     * Slider representando quanto tempo passou da música.
+     */
     @FXML
     private Slider tempoMusicaSlider;
 
+    /**
+     * ListView de músicas de playlist selecionada.
+     */
     @FXML
     private ListView<Musica> lvPlayListAtual;
 
+    /**
+     * Lista observável de músicas de playlist selecionada.
+     */
     private ObservableList<Musica> obsPlaylistAtual;
 
+    /**
+     * Lista de músicas de playlist selecionada.
+     */
     private Playlist playlistAtual;
 
+    /**
+     * Última música tocada.
+     */
     private Musica ultimaMusica;
 
-
+    /**
+     * Adiciona música na playlist selecionada.
+     * @param event Click do mouse no botão.
+     */
     @FXML
     void addMusicaPlaylistAtual(ActionEvent event) {
         if (playlistAtual != null){
@@ -110,7 +178,7 @@ public class PlayerController {
             Optional<Musica> result = dialog.showAndWait();
 
             result.ifPresent(selectedItem -> {
-                System.out.println("Selected Item: " + selectedItem);
+                System.out.println("Música pra adicionar na playlist: " + selectedItem);
 
                 ControlePlaylist controlePlaylist = new ControlePlaylist();
                 ControleUsuario controleUsuario = ControleUsuario.getInstancia();
@@ -125,6 +193,10 @@ public class PlayerController {
         }
     }
 
+    /**
+     * Cadastra música no diretório.
+     * @param event Click do mouse no botão.
+     */
     @FXML
     void cadastrarMusica(ActionEvent event) {
         FileChooser chooser = new FileChooser();
@@ -150,6 +222,10 @@ public class PlayerController {
         }
     }
 
+    /**
+     * Cria playlist pro usuário selecionado.
+     * @param event Click do mouse no botão.
+     */
     @FXML
     void criarPlaylist(ActionEvent event) {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
@@ -165,7 +241,7 @@ public class PlayerController {
             Optional<String> result = dialog.showAndWait();
 
             result.ifPresent(name -> {
-                System.out.println("Nome de playlist: " + name);
+                System.out.println("Nome de playlist criada: " + name);
                 controlePlaylist.adicionarPlaylist(name, controleUsuario.getUsuarioLogado());
                 controleUsuario.atualizarPlaylistsDeUsuario();
 
@@ -177,6 +253,10 @@ public class PlayerController {
         }
     }
 
+    /**
+     * Remove playlist de usuário.
+     * @param event Click do mouse no botão.
+     */
     @FXML
     void removerPlaylist(ActionEvent event) {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
@@ -192,7 +272,7 @@ public class PlayerController {
             Optional<String> result = dialog.showAndWait();
 
             result.ifPresent(name -> {
-                System.out.println("Playlist Nome: " + name);
+                System.out.println("Playlist removida: " + name);
                 controlePlaylist.removerPlaylist(name, controleUsuario.getUsuarioLogado());
                 controleUsuario.atualizarPlaylistsDeUsuario();
 
@@ -204,16 +284,10 @@ public class PlayerController {
         }
     }
 
-    @FXML
-    void btnPause(MouseEvent event) {
-
-    }
-
-    @FXML
-    void btnPlay(MouseEvent event) {
-
-    }
-
+    /**
+     * Continua ou inicia reprodução de música.
+     * @param event
+     */
     @FXML
     void continuarMusica(ActionEvent event) {
         if (mediaPlayer != null && mediaPlayer.getStatus().equals(MediaPlayer.Status.PAUSED) && ultimaMusica == null) {
@@ -264,22 +338,19 @@ public class PlayerController {
         );
     }
 
+    /**
+     * Pausa reprodução de música.
+     * @param event Click do mouse no botão.
+     */
     @FXML
     void pausarMusica(ActionEvent event) {
         lblMusicaAtual.setText("Pausado");
         mediaPlayer.pause();
     }
 
-    @FXML
-    void tocarMusicaAnterior(ActionEvent event) {
-
-    }
-
-    @FXML
-    void tocarProximaMusica(ActionEvent event) {
-
-    }
-
+    /**
+     * Inicializa janela de player.
+     */
     public void start() {
         ControleUsuario controleUsuario = ControleUsuario.getInstancia();
         ControleMusica controleMusica = ControleMusica.getInstancia();
@@ -310,7 +381,7 @@ public class PlayerController {
             obsPlaylistsDoUsuario = FXCollections.observableArrayList(playlistsDeUsuarioLogado);
             lvPlaylistsDoUsuario.setItems(obsPlaylistsDoUsuario);
 
-            // listener de playlists de usuario
+            // listener de playlists de usuário
             lvPlaylistsDoUsuario.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                 if (newValue != null) {
                     playlistAtual = newValue;
@@ -320,6 +391,7 @@ public class PlayerController {
                     obsPlaylistAtual = FXCollections.observableArrayList(playlistAtual.getMusicas());
                     lvPlayListAtual.setItems(obsPlaylistAtual);
 
+                    // listener de playlist selecionado
                     lvPlayListAtual.getSelectionModel().selectedItemProperty().addListener((observable2, oldValue2, newValue2) -> {
                         if (newValue2 != null) {
                             if (musicaAtual != null){
@@ -336,79 +408,5 @@ public class PlayerController {
             btnRemovePlaylist.setDisable(true);
             btnAddMusicaPlaylist.setDisable(true);
         }
-    }
-
-
-
-
-    /**
-     * Inicia do início a reprodução da música atual.
-     */
-    public void tocarMusica() {
-        mediaPlayer.play();
-    }
-
-
-    /**
-     * Pausa a reprodução da música atual.
-     */
-    public void pausarMusica() {
-        mediaPlayer.pause();
-    }
-
-    /**
-     * Retoma a reprodução da música atual a partir do ponto de pausa.
-     */
-    public void continuarMusica() {
-
-    }
-
-    /**
-     * Avança para a próxima música do diretório ou playlist.
-     */
-    public void tocarProximaMusica() {
-
-    }
-
-    /**
-     * Volta para a música anterior do diretório ou playlist.
-     */
-    public void tocarMusicaAnterior() {
-
-    }
-
-    /**
-     * Obtém a música atualmente em reprodução.
-     * @return Instância da classe Musica representando a música atual.
-     */
-    public Musica getMusicaAtual() {
-        return musicaAtual;
-    }
-
-    /**
-     * Define a música que será reproduzida.
-     * @param musicaAtual A instância da classe Musica que será definida como a música atual.
-     */
-    public void setMusicaAtual(Musica musicaAtual) {
-        this.musicaAtual = musicaAtual;
-    }
-
-    /**
-     * Obtém o tempo atual de reprodução da música, em segundos.
-     * @return Tempo atual de reprodução da música.
-     */
-    public double getTempoAtual() {
-        return tempoAtual;
-    }
-
-    /**
-     * Define o tempo atual de reprodução da música, em segundos.
-     * @param tempoAtual O tempo atual de reprodução da música a ser definido.
-     */
-    public void setTempoAtual(double tempoAtual) {
-        this.tempoAtual = tempoAtual;
-    }
-
-    public void mudarTempoDaMusica(MouseEvent mouseEvent) {
     }
 }

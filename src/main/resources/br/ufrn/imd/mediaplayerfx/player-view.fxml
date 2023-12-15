@@ -35,7 +35,7 @@
          <children>
             <HBox alignment="TOP_CENTER" prefHeight="36.0" prefWidth="1280.0">
                <children>
-                  <Slider fx:id="tempoMusicaSlider" onMouseClicked="#mudarTempoDaMusica" HBox.hgrow="ALWAYS">
+                  <Slider fx:id="tempoMusicaSlider" HBox.hgrow="ALWAYS">
                      <padding>
                         <Insets left="15.0" right="15.0" />
                      </padding>
@@ -52,18 +52,16 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#tocarMusicaAnterior" text="&lt;&lt;" />
-                  <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#continuarMusica" onMouseClicked="#btnPlay" text="I&gt;">
+                  <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#continuarMusica" text="I&gt;">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnPause" mnemonicParsing="false" onAction="#pausarMusica" onMouseClicked="#btnPause" text="l l">
+                  <Button fx:id="btnPause" mnemonicParsing="false" onAction="#pausarMusica" text="l l">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#tocarProximaMusica" text="&gt;&gt;" />
                   <Label fx:id="lblDuration" text="00:00" />
                </children></HBox>
          </children>

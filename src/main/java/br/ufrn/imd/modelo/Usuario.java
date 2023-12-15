@@ -26,14 +26,6 @@ public class Usuario {
   }
 
   /**
-   * Adiciona um diretório ao usuário.
-   * @param nome Nome do diretório a ser adicionado.
-   */
-  void adicionarDiretorio(String nome) {
-
-  }
-
-  /**
    * Obtém o username do usuário.
    * @return Username do usuário.
    */
@@ -47,13 +39,6 @@ public class Usuario {
    */
   public String getSenha() {
     return this.senha;
-  }
-
-  /**
-   * Torna o usuário premium.
-   */
-  public void virarPremium() {
-
   }
 
   @Override

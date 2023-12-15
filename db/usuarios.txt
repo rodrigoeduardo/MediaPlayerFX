@@ -2,3 +2,4 @@ rodrigo,123,false
 lucas,456,true
 victor,789,true
 joao,123,false
+fred,123,false

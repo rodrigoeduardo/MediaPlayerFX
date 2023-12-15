@@ -154,9 +154,6 @@ public class ControleUsuario {
                 }
             }
         }
-
-
-        return;
     }
 
     /**

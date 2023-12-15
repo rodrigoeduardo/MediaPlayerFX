@@ -7,6 +7,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Aplicação principal, roda janela de login e em seguida a página do player
+ */
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {

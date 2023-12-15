@@ -13,17 +13,40 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
+
+    /**
+     * TextField de login de usuário.
+     */
     @FXML
     private TextField usuarioTextField;
+
+    /**
+     * PasswordField de login de usuário.
+     */
     @FXML
     private PasswordField senhaField;
+
+    /**
+     * Label de status de login.
+     */
     @FXML
     private Label statusLogin;
+
+    /**
+     * TextField de cadastro de usuário.
+     */
     @FXML
     private TextField usuarioTextFieldCadastro;
+
+    /**
+     * PasswordField de cadastro de usuário.
+     */
     @FXML
     private PasswordField senhaFieldCadastro;
 
+    /**
+     * Trata tentativa de Login pelo botão.
+     */
     @FXML
     protected void onLoginButtonClick() {
         if (usuarioTextField.getText().isBlank() == true || senhaField.getText().isBlank() == true) return;
@@ -43,6 +66,9 @@ public class LoginController {
         else statusLogin.setText("Usuário ou senha incorretos.");
     }
 
+    /**
+     * Trata tentativa de cadastro pelo botão.
+     */
     @FXML
     protected void onCadastroButtonClick() {
         if (usuarioTextFieldCadastro.getText().isBlank() == true || senhaFieldCadastro.getText().isBlank() == true) return;
@@ -55,6 +81,10 @@ public class LoginController {
         senhaFieldCadastro.clear();
     }
 
+    /**
+     * Abre a janela de Player.
+     * @throws IOException
+     */
     private void abrirPlayer() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("player-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
