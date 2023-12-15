@@ -368,7 +368,7 @@ public class PlayerController {
                     ultimaMusica = musicaAtual;
                 }
                 musicaAtual = newValue;
-                System.out.println("Selected Musica from Diretorio: " + musicaAtual);
+                System.out.println("Música selecionada do diretório: " + musicaAtual);
             }
         });
 
